@@ -27,7 +27,8 @@ class WebScraper:
         self.search_engine = search_engine
 
     def get_search_results(self, search_query):
-        response = requests.get(f"{self.search_engine}/search?q={search_query}")
+        response = requests.get(
+            f"{self.search_engine}/search?q={search_query}")
         soup = BeautifulSoup(response.content, 'html.parser')
         search_results = soup.find_all("div", class_="search-result")
         urls = [result.find("a")["href"] for result in search_results]
@@ -89,7 +90,8 @@ class ScheduledExecutor:
             time.sleep(self.execution_interval)
 
     def execute_tasks(self):
-        search_query_generator = SearchQueryGenerator(["technology", "health", "finance"])
+        search_query_generator = SearchQueryGenerator(
+            ["technology", "health", "finance"])
         search_query = search_query_generator.generate_search_query()
 
         web_scraper = WebScraper("https://www.google.com")
@@ -126,7 +128,8 @@ class ErrorHandling:
     def handle_search_engine_behavior(self, error):
         # Implement logic to handle alterations in search engine behavior
         with open(self.log_file, "a") as file:
-            file.write(f"[{datetime.now()}] Search Engine Behavior Error: {error}\n")
+            file.write(
+                f"[{datetime.now()}] Search Engine Behavior Error: {error}\n")
 
 
 def create_folder(folder_path):
